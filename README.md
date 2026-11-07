@@ -77,7 +77,7 @@ The project was built in three steps:
 ### Agent (`agent.py`)
 
 - Each tool is described to the LLM with a JSON Schema (`name`, `description`, `parameters`);
-- A system prompt defines the assistant's role, asks it to cite pages, forbids invented numerical values, and limits repeated searches;
+- A system prompt defines the assistant's role, asks it to cite pages, forbids invented numerical values, keeps internal tool names out of the answers, and limits repeated searches;
 - An **agent loop** sends the conversation to the LLM, executes the requested tools, returns their results, and repeats until the LLM produces a final answer (maximum 5 rounds, as a safeguard against endless tool calls).
 
 ### Interface (`app.py`)
@@ -102,6 +102,8 @@ Because `gpt-oss-120b` is a reasoning model, its reasoning tokens count towards 
 ├── liste_modeles.py     # Lists the models available from the LLM provider
 ├── epanet_manuel.pdf    # EPANET 2.2 User Manual (U.S. EPA)
 ├── Net3.inp             # Example network (from the WNTR repository)
+├── capture_agent.png    # Screenshot of the chat interface
+├── README.md
 ├── requirements.txt
 ├── .env.example
 └── .gitignore
@@ -179,6 +181,7 @@ These are manual checks on a handful of questions, not a systematic evaluation.
 - **No conversation memory:** each message is treated independently, and short messages such as "super" or "merci" are handled as documentation questions in the RAG version.
 - **One simulation tool only:** pressures on the Net3 network, at whole hours. Future tools could cover flows, water quality, detection of negative pressures, or user-provided `.inp` files.
 - **The vector store is rebuilt at each start-up.** Persisting ChromaDB on disk would reduce start-up time.
+- **Citation formatting still depends on the model.** The post-processing handles the formats observed so far, but the model may produce new ones. Asking for structured output (for example JSON with the answer and a list of pages) and formatting the citations in code would be more robust.
 - **Retrieval could be improved** with hybrid search (BM25 + embeddings), a reranker, or a comparison of embedding models, measured with the evaluation set.
 - `langchain-community` is being deprecated; the loader should be migrated to a dedicated integration package.
 
