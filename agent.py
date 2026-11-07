@@ -85,6 +85,7 @@ def agent(question, max_tours=5):
             "Cite les pages utilisées sous la forme (p. 3), en t'appuyant sur les numéros [page X] du contexte. "
             "N'invente jamais de valeurs numériques : utilise toujours un outil pour les obtenir. "
             "Réponds dans la même langue que la question."
+                        "Pour une valeur obtenue par simulation, n'ajoute aucune référence de page. "
         )},
         {"role": "user", "content": question},
     ]

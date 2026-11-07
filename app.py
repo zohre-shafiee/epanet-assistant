@@ -4,8 +4,8 @@ import re
 
 def chat(message, history):
     texte = agent(message)
-    texte = re.sub(r"【page (\d+)】", r"(p. \1)", texte)   # 【page 143】 → (p. 143)
-    texte = re.sub(r"【[^】]*】", "", texte)                # supprime les autres 【...】
+    texte = re.sub(r"\[\s*(\(p\. \d+\))\s*\]", r"\1", texte)
+    texte = re.sub(r"\s*\[\(p\.\s*[—-][^\]]*\]", "", texte)               
     return texte
 
 demo = gr.ChatInterface(
