@@ -6,6 +6,8 @@ Personal project · NLP / LLM agents · Python · LangChain · ChromaDB · WNTR 
 
 This project is a prototype assistant for users of **EPANET**, the U.S. EPA software for simulating water distribution networks.
 
+![Agent answering a question that requires both tools](capture_agent.png)
+
 It combines two capabilities behind a single chat interface:
 
 - **Documentation search (RAG):** answering questions about EPANET from the official *EPANET 2.2 User Manual*, with page references;
@@ -81,7 +83,7 @@ The project was built in three steps:
 ### Interface (`app.py`)
 
 - A `gr.ChatInterface` connected to the agent, with three example questions;
-- A post-processing step that normalises the model's citation formats to `(page X)`.
+- A post-processing step that normalises the model's citation formats to `(p. X)`, the format requested in the system prompt.
 
 ### LLM provider
 
